@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>邮递物品税款辅助计算器</title>
+    <!-- 引入 CSS 样式文件 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="filter-bar">
+    <div class="filter-options">
+        <label>筛选：</label>
+        <label><input type="radio" name="filter" value="all" checked> 全部</label>
+        <label><input type="radio" name="filter" value="selected"> 已选择</label>
+        <label><input type="radio" name="filter" value="unselected"> 未选择</label>
+    </div>
+    <div class="search-box">
+        <input type="text" placeholder="请输入分类编号或物品名称" id="search-input">
+    </div>
+</div>
+
+<div class="table-container">
+    <table id="tax-table">
+        <thead>
+        <tr>
+            <th><input type="checkbox" id="select-all"></th>
+            <th>分类编号</th>
+            <th>物品名称</th>
+            <th>综合税率</th>
+            <th>计税价格表（人民币：元）</th>
+            <th>单位数量</th>
+            <th>实际购买单价（人民币：元）</th>
+            <th>税款计算（人民币：元）</th>
+        </tr>
+        </thead>
+        <tbody id="table-body">
+        <!-- 表格内容由JS动态生成 -->
+        </tbody>
+    </table>
+</div>
+
+<div class="summary-bar">
+    <button class="summary-btn" id="calculate-btn">一键汇总</button>
+    <span class="total-tax">合计税款：¥0.00</span>
+</div>
+<div class="notice">
+    1.邮递物品税款辅助计算器为辅助工具，不作为缴税依据，实际税款以海关审定为准。<br>
+    2.依据为海关总署《2024年175号公告》及《2024年176号公告》。<br>
+    3.邮递进出境的物品，应当以合理自用数量为限。<br>
+    4.本功能仅适用于邮递物品进口税款的计算。<br>
+    以上内容仅供参考，具体以现场为准。
+</div>
+<!-- ... existing code ... -->
+<div class="signature">
+    <p>技术支持：<a href="https://online.customs.gov.cn/" target="_blank">邮递物品税款辅助计算器</a> | 版本：v1.0 | 更新日期：2026 年 3 月</p>
+</div>
+
+
+<!-- 引入JavaScript交互文件 -->
+<script src="script.js"></script>
+</body>
+</html>
