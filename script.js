@@ -199,6 +199,7 @@ const itemData = [
     { code: "16020300", name: "音箱", taxRate: "13%", basePrice: "50", unit: "个" },
     { code: "16020411", name: "22英寸及以下液晶显示器", taxRate: "13%", basePrice: "500", unit: "台" },
     { code: "16020412", name: "22英寸以上，27英寸及以下液晶显示器", taxRate: "13%", basePrice: "1000", unit: "台" },
+    { code: "16020412", name: "22英寸以上，27英寸及以下液晶显示器", taxRate: "13%", basePrice: "1000", unit: "台" },
     { code: "16020413", name: "27英寸以上液晶显示器", taxRate: "13%", basePrice: "另行确定", unit: "台" },
     { code: "16020490", name: "其他显示器", taxRate: "13%", basePrice: "另行确定", unit: "台" },
     { code: "16020511", name: "黑白激光打印机", taxRate: "13%", basePrice: "1000", unit: "台" },
@@ -319,8 +320,8 @@ document.addEventListener('DOMContentLoaded', function() {
         alert(`邮递物品税款辅助计算器说明
 
 1. 使用方法：
-   - 在“单位数量”列输入您携带的物品数量
-   - 在“实际购买单价”列输入您购买物品的实际价格
+   - 在"单位数量"列输入您携带的物品数量
+   - 在"实际购买单价"列输入您购买物品的实际价格
    - 系统将根据海关规定自动计算税款
    
 2. 税款计算规则：
@@ -369,29 +370,20 @@ document.addEventListener('DOMContentLoaded', function() {
             // 核心：实时计算单行税款的函数（无延迟）
             function updateRowTax() {
                 // 提取计算所需数据
-                const taxRate = parseFloat(item.taxRate) / 100; // 税率转小数
+                const taxRateStr = item.taxRate.replace('%', ''); // 移除百分号
+                const taxRate = parseFloat(taxRateStr) / 100; // 税率转小数
                 const quantity = parseFloat(quantityInput.value) || 0; // 数量
                 const customPrice = parseFloat(priceInput.value) || 0; // 自定义价格
-                const basePrice = parseFloat(item.basePrice) || 0; // 基准价格
+                const basePriceStr = item.basePrice === '另行确定' ? 0 : parseFloat(item.basePrice); // 基准价格
 
                 // 确定计税价格：优先使用自定义价格，无则用基准价格
-                const taxPrice = customPrice > 0 ? customPrice : basePrice;
+                const taxPrice = customPrice > 0 ? customPrice : basePriceStr;
 
                 // 如果计税价格为0，税款直接为 0
                 if (taxPrice === 0) {
                     taxAmountCell.textContent = '0.00';
                     return;
                 }
-                 // 如果实际购买单价为 0，不管数量多少，税款都为0
-                if (customPrice  === 0) {
-                    taxAmountCell.textContent = '0.00';
-                    return;
-                }
-                if (quantity === 0 ){ 
-                    taxAmountCell.textContent = '0.00';
-                    return;
-
-                }   
 
                 // 计算单行税款
                 const rowTax = (taxPrice * quantity) * taxRate;
